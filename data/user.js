@@ -17,10 +17,23 @@ module.exports = {
     createUser: async (username, name) => {
         try {
             const [results] = await db.query('INSERT INTO `User` (`username`, `name`) VALUES (?, ?)', [username, name]);
+            
+            if(results.affectedRows === 1) {
+                return true;
+            }
+        } catch (error) {
+            console.error(error);
+        }
 
-            console.log(results);
+        return false;
+    },
+    deleteUser: async (username) => {
+        try {
+            const [results] = await db.query('DELETE FROM `User` WHERE `username` = ?', [username]);
 
-            return true;
+            if(results.affectedRows === 1) {
+                return true;
+            }
         } catch (error) {
             console.error(error);
         }

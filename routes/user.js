@@ -47,4 +47,14 @@ router.get('/logout', function(req, res, next) {
   res.redirect('/user');
 });
 
+router.post('/remove', async function(req, res, next) {
+  if(req.session.username && await data.deleteUser(req.session.username)) {
+    req.session.username = null;
+
+    res.redirect('/user');
+  } else {
+    res.render('user_dash', { username: req.session.username, message: 'Could not delete account' });
+  }
+});
+
 module.exports = router;
