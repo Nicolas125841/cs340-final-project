@@ -4,7 +4,7 @@ var data = require('../data/user');
 var router = express.Router();
 
 router.get('/', async function(req, res, next) {
-  if(req.session.username && await data.userExists(req.session.username)) {
+  if(req.session.username && await data.getUser(req.session.username)) {
     res.render('user_dash', { username: req.session.username });
   } else {
     req.session.username = null;
@@ -13,22 +13,38 @@ router.get('/', async function(req, res, next) {
   }
 });
 
+router.get('/register', function(req, res, next) {
+  res.render('user_reg.hbs');
+});
+
+router.post('/register', async function(req, res, next) {
+  if(await data.createUser(req.body.username, req.body.name)) {
+    req.session.username = req.body.username;
+
+    res.redirect('/user');
+  } else {
+    res.render('user_reg', { message: 'User already exists' });
+  }
+});
+
 router.get('/login', function(req, res, next) {
   res.render('user_login');
 });
 
 router.post('/login', async function(req, res, next) {
-  if(await data.userExists(req.body.username)) {
+  if(await data.getUser(req.body.username)) {
     req.session.username = req.body.username;
-  } 
 
-  res.redirect('/user');
+    res.redirect('/user');
+  } else {
+    res.render('user_login', { message: 'User not found' });
+  }
 });
 
 router.get('/logout', function(req, res, next) {
   req.session.username = null;
 
-  res.redirect('/');
+  res.redirect('/user');
 });
 
 module.exports = router;
