@@ -1,6 +1,6 @@
-var mysql = require('mysql2');
+var mysql = require('mysql2/promise');
 
-exports.connection = mysql.createPool({
+module.exports = mysql.createPool({
     connectionLimit: 10,
     host: process.env.DB_HOST,
     user: process.env.DB_UNAME,
