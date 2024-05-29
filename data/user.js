@@ -27,6 +27,19 @@ module.exports = {
 
         return false;
     },
+    updateUser: async (newData, username) => {
+        try {
+            const [results] = await db.query('UPDATE `User` SET ? WHERE `username` = ?', [newData, username]);
+            
+            if(results.affectedRows === 1) {
+                return true;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+        return false;
+    },
     deleteUser: async (username) => {
         try {
             const [results] = await db.query('DELETE FROM `User` WHERE `username` = ?', [username]);

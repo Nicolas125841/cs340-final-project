@@ -4,8 +4,36 @@ var data = require('../data/user');
 var router = express.Router();
 
 router.get('/', async function(req, res, next) {
-  if(req.session.username && await data.getUser(req.session.username)) {
-    res.render('user_dash', { username: req.session.username });
+  let user;
+
+  if(req.session.username && (user = await data.getUser(req.session.username))) {
+    res.render('user_dash', user);
+  } else {
+    req.session.username = null;
+
+    res.redirect('user/login');
+  }
+});
+
+router.post('/', async function(req, res, next) {
+  let oldUser, newUser;
+
+  if(req.session.username && (oldUser = await data.getUser(req.session.username))) {
+    newUser = {
+      username: req.body.username || oldUser.username,
+      name: req.body.name || oldUser.name,
+      join_date: oldUser.join_date
+    };
+
+    if(await data.updateUser(newUser, oldUser.username)) {
+      req.session.username = newUser.username;
+
+      res.render('user_dash', newUser);
+    } else {
+      req.session.username = oldUser.username;
+
+      res.render('user_dash', { ...oldUser, message: 'Could not update info' });
+    }
   } else {
     req.session.username = null;
 
