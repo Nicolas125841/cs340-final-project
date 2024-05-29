@@ -9,6 +9,7 @@ var dbPool = require('./db');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var cookieSession = require('cookie-session');
 var app = express();
 
 // view engine setup
@@ -20,6 +21,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESH_KEY],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
