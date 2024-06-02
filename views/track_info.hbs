@@ -1,0 +1,36 @@
+<h1>Track Info</h1>
+<h1>Title: {{title}}</h1>
+<h2>Artist ID: {{artist_id}}</h2>
+<h2>Genre: {{genre}}</h2>
+<h2>Length: {{length}}</h2>
+<h2>Explicit: {{explicitness}}</h2>
+{{#if can_update}}
+  <form action="" method="post">
+    <h3>Update track</h3>
+    <div>
+      <p>{{message}}</p>
+    </div>
+    <div>
+      <label for="genre">Genre:</label>
+      <input type="text" name="genre" id="genre" />
+    </div>
+    <div>
+      <label for="length">Length:</label>
+      <input type="number" name="length" id="length" />
+    </div>
+    <fieldset>
+      <legend>Explicit:</legend>
+      <div>
+        <input type="radio" id="false" name="is_explicit" value="0" />
+        <label for="false">False</label>
+      </div>
+      <div>
+        <input type="radio" id="true" name="is_explicit" value="1" />
+        <label for="true">True</label>
+      </div>
+    </fieldset>
+    <div>
+      <input type="submit" value="Update" />
+    </div>
+  </form>
+{{/if}}

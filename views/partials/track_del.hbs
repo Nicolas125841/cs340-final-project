@@ -1,0 +1,15 @@
+<form action="/track/delete" method="post">
+  <h3>Delete track</h3>
+  <fieldset>
+    <legend>Tracks:</legend>
+    {{#each tracks}}
+      <div>
+        <input type="radio" id="{{title}}" name="title" value="{{title}}" />
+        <label for="{{title}}">{{title}}</label>
+      </div>
+    {{/each}}
+  </fieldset>
+  <div>
+    <input type="submit" value="Delete" />
+  </div>
+</form>

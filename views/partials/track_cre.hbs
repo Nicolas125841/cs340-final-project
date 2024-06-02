@@ -1,0 +1,29 @@
+<form action="/track/create" method="post">
+  <h3>Create track</h3>
+  <div>
+    <label for="title">Title:</label>
+    <input type="text" name="title" id="title" required />
+  </div>
+  <div>
+    <label for="genre">Genre:</label>
+    <input type="text" name="genre" id="genre" required />
+  </div>
+  <div>
+    <label for="length">Length:</label>
+    <input type="number" name="length" id="length" required />
+  </div>
+  <fieldset>
+    <legend>Explicit:</legend>
+    <div>
+      <input type="radio" id="false" name="is_explicit" value="0" checked />
+      <label for="false">False</label>
+    </div>
+    <div>
+      <input type="radio" id="true" name="is_explicit" value="1" />
+      <label for="true">True</label>
+    </div>
+  </fieldset>
+  <div>
+    <input type="submit" value="Create" />
+  </div>
+</form>

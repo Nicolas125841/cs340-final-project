@@ -1,0 +1,24 @@
+<h1>Dash</h1>
+<h1>ID: {{artist_id}}</h1>
+<h2>Name: {{name}}</h2>
+<h2>Join date: {{join_date}}</h2>
+<h2>Producer: {{producer}}</h2>
+<div>
+  <button id="track-button">Tracks</button>
+  <button id="create-button">Create Track</button>
+  <button id="delete-button">Delete Track</button>
+  <button id="modify-button">Modify Info</button>
+</div>
+<div>
+  <p>{{message}}</p>
+</div>
+<div id="artist-activity"></div>
+<div>
+  <a href="/artist/logout">Logout</a>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" defer ></script>
+<script src="/javascripts/trackListTemplate.js" defer ></script>
+<script src="/javascripts/trackCreateTemplate.js" defer ></script>
+<script src="/javascripts/trackDeleteTemplate.js" defer ></script>
+<script src="/javascripts/artistModifyTemplate.js" defer ></script>
+<script src="/javascripts/artistDash.js" defer ></script>

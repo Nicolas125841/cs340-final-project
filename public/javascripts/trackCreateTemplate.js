@@ -1,0 +1,6 @@
+(function() {
+  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+templates['track_cre.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<form action=\"/track/create\" method=\"post\">\r\n  <h3>Create track</h3>\r\n  <div>\r\n    <label for=\"title\">Title:</label>\r\n    <input type=\"text\" name=\"title\" id=\"title\" required />\r\n  </div>\r\n  <div>\r\n    <label for=\"genre\">Genre:</label>\r\n    <input type=\"text\" name=\"genre\" id=\"genre\" required />\r\n  </div>\r\n  <div>\r\n    <label for=\"length\">Length:</label>\r\n    <input type=\"number\" name=\"length\" id=\"length\" required />\r\n  </div>\r\n  <fieldset>\r\n    <legend>Explicit:</legend>\r\n    <div>\r\n      <input type=\"radio\" id=\"false\" name=\"is_explicit\" value=\"0\" checked />\r\n      <label for=\"false\">False</label>\r\n    </div>\r\n    <div>\r\n      <input type=\"radio\" id=\"true\" name=\"is_explicit\" value=\"1\" />\r\n      <label for=\"true\">True</label>\r\n    </div>\r\n  </fieldset>\r\n  <div>\r\n    <input type=\"submit\" value=\"Create\" />\r\n  </div>\r\n</form>";
+},"useData":true});
+})();
