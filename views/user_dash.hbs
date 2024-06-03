@@ -2,29 +2,22 @@
 <h1>Username: {{username}}</h1>
 <h2>Name: {{name}}</h2>
 <h2>Join date: {{join_date}}</h2>
-<form action="" method="post">
-  <h3>Update account details</h3>
-  <div>
-    <p>{{message}}</p>
-  </div>
-  <div>
-    <label for="name">New username:</label>
-    <input type="text" name="username" id="username" />
-  </div>
-  <div>
-    <label for="name">New name:</label>
-    <input type="text" name="name" id="name" />
-  </div>
-  <div>
-    <input type="submit" value="Update" />
-  </div>
-</form>
+<div>
+  <button id="playlist-button">Playlists</button>
+  <button id="create-button">Create Playlist</button>
+  <button id="delete-button">Delete Playlist</button>
+  <button id="modify-button">Modify Info</button>
+</div>
+<div>
+  <p>{{message}}</p>
+</div>
+<div id="user-activity"></div>
 <div>
   <a href="/user/logout">Logout</a>
 </div>
-<form action="/user/remove" method="post">
-    <div>
-        <p>{{message}}</p>
-    </div>
-    <input type="submit" value="Remove Account" />
-</form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" defer ></script>
+<script src="/javascripts/playlistListTemplate.js" defer ></script>
+<script src="/javascripts/playlistCreateTemplate.js" defer ></script>
+<script src="/javascripts/playlistDeleteTemplate.js" defer ></script>
+<script src="/javascripts/userModifyTemplate.js" defer ></script>
+<script src="/javascripts/userDash.js" defer ></script>

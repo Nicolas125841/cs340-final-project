@@ -11,7 +11,7 @@ router.get('/', async function(req, res, next) {
   } else {
     req.session.username = null;
 
-    res.redirect('user/login');
+    res.redirect('/user/login');
   }
 });
 
@@ -37,7 +37,7 @@ router.post('/', async function(req, res, next) {
   } else {
     req.session.username = null;
 
-    res.redirect('user/login');
+    res.redirect('/user/login');
   }
 });
 

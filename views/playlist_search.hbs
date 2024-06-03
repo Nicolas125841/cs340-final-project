@@ -1,0 +1,14 @@
+<h1>Search Playlists:</h1>
+<div>
+  {{#each playlists}}
+    <div>
+      <p>{{name}} by {{username}}</p>
+      {{!-- <p>
+        Length: {{length}}
+        {{#if is_explicit}}
+          | <bold>explicit</bold>
+        {{/if}}
+      </p> --}}
+    </div>
+  {{/each}}
+</div>

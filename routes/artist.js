@@ -11,7 +11,7 @@ router.get('/', async function(req, res, next) {
   } else {
     req.session.artist_id = null;
 
-    res.redirect('artist/login');
+    res.redirect('/artist/login');
   }
 });
 
@@ -38,7 +38,7 @@ router.post('/', async function(req, res, next) {
   } else {
     req.session.artist_id = null;
 
-    res.redirect('artist/login');
+    res.redirect('/artist/login');
   }
 });
 
