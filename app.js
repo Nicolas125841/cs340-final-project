@@ -16,6 +16,7 @@ var app = express();
 
 // register partials
 hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerHelper('dateFormat', require('handlebars-dateformat'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -62,3 +62,7 @@ typings/
 
 # mysql auth info
 secret.sh
+
+env.sh
+
+package-lock.json
