@@ -1,6 +1,7 @@
 var express = require('express');
 var userData = require('../data/user');
 var playlistData = require('../data/playlist');
+var playlistTrackData = require('../data/playlistTrack');
 
 var router = express.Router();
 
@@ -21,13 +22,13 @@ router.post('/', async function(req, res, next) {
 });
 
 router.post('/create', async function(req, res, next) {
-  console.log(req.body);
+  let user;
 
-  if(req.session.username && await userData.getUser(req.session.username)) {
+  if(req.session.username && (user = await userData.getUser(req.session.username))) {
     if(await playlistData.createPlaylist(req.body.name, req.body.is_public, req.session.username)) {
-      res.status(201).json({ message: 'OK' });
+      res.render('user_dash', { ...user, message: `Created playlist ${req.body.name}` });
     } else {
-      res.status(400).json({ message: 'Could not create playlist' });
+      res.render('user_dash', { ...user, message: `Could not create playlist ${req.body.name}` });
     }
   } else {
     req.session.username = null;
@@ -37,17 +38,21 @@ router.post('/create', async function(req, res, next) {
 });
 
 router.post('/delete', async function(req, res, next) {
-  if(req.session.username && await userData.getUser(req.session.username)) {
+  let user;
+
+  if(req.session.username && (user = await userData.getUser(req.session.username))) {
     let playlist;
 
     if(req.body.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.body.playlist_id, username: req.session.username })) && playlist.length === 1) {
         if(await playlistData.deletePlaylist(req.body.playlist_id)) {
-          res.status(200).json({ message: 'OK' });
+          res.render('user_dash', { ...user, message: `Deleted playlist ${playlist[0].name}` });
         } else {
-          res.status(400).json({ message: 'Could not delete playlist' });
+          res.render('user_dash', { ...user, message: `Could not delete playlist ${playlist[0].name}` });
         }
     } else {
-        res.status(400).json({ message: 'Invalid user session' });
+      req.session.username = null;
+
+      res.redirect('/user/login');
     }
   } else {
     req.session.username = null;
@@ -59,8 +64,10 @@ router.post('/delete', async function(req, res, next) {
 router.get('/:playlist_id', async function(req, res, next) {
   let playlist;
 
-  if(req.params.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.params.playlist_id })) && playlist.length === 1) {
-    res.render('playlist_info', { ...playlist[0], can_update: req.session.username === playlist[0].username });
+  if(req.params.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.params.playlist_id })) && playlist.length === 1) {    
+    let tracks = await playlistTrackData.getTracksInPlaylist({ playlist_id: playlist[0].playlist_id });
+
+    res.render('playlist_info', { ...playlist[0], tracks: tracks, can_update: req.session.username === playlist[0].username });
   } else {
     res.status(404).render('error', { message: 'Playlist does not exist' });
   }

@@ -4,7 +4,6 @@ var trackData = require('../data/track');
 
 var router = express.Router();
 
-//TODO: Move stuff to get route from post
 router.get('/', async function(req, res, next) {
   res.render('track_search', { tracks: await trackData.getTracks({})});
 });
@@ -60,11 +59,13 @@ router.post('/:artist_id/:title', async function(req, res, next) {
 });
 
 router.post('/create', async function(req, res, next) {
-  if(req.session.artist_id && await artistData.getArtist(req.session.artist_id)) {
+  let artist;
+
+  if(req.session.artist_id && (artist = await artistData.getArtist(req.session.artist_id))) {
     if(await trackData.createTrack(req.body.title, req.session.artist_id, req.body.genre, req.body.length, req.body.is_explicit)) {
-      res.status(201).json({ message: 'OK' });
+      res.render('artist_dash', { ...artist, message: `Created track ${req.body.title}`});
     } else {
-      res.status(400).json({ message: 'Could not create track' });
+      res.render('artist_dash', { ...artist, message: `Could not create track ${req.body.title}`});
     }
   } else {
     req.session.artist_id = null;
@@ -74,11 +75,13 @@ router.post('/create', async function(req, res, next) {
 });
 
 router.post('/delete', async function(req, res, next) {
-  if(req.body.title && req.session.artist_id && await artistData.getArtist(req.session.artist_id)) {
+  let artist;
+
+  if(req.body.title && req.session.artist_id && (artist = await artistData.getArtist(req.session.artist_id))) {
     if(await trackData.deleteTrack(req.body.title, req.session.artist_id)) {
-      res.status(200).json({ message: 'OK' });
+      res.render('artist_dash', { ...artist, message: `Deleted track ${req.body.title}`});
     } else {
-      res.status(400).json({ message: 'Could not delete track' });
+      res.render('artist_dash', { ...artist, message: `Could not delete track ${req.body.title}`});
     }
   } else {
     req.session.artist_id = null;
