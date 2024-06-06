@@ -20,6 +20,7 @@
     activitySection.insertAdjacentHTML('beforeend', listHtml);
   }; 
 
+
   playlistTab.addEventListener('click', showList);
 
   createTab.addEventListener('click', async () => {

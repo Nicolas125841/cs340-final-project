@@ -1,0 +1,4 @@
+- search for playlist / artist interesting stats
+that kinda stuff
+- add songs to playlist
+- one user copies another user's playlist

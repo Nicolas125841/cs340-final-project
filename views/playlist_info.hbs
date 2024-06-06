@@ -1,9 +1,10 @@
 <h1>Playlist Info</h1>
 <h1>Name: {{name}}</h1>
 <h2>Creator: {{username}}</h2>
+<meta name="playlist-id" content="{{ playlist_id }}">
 {{!-- <h2>Length: {{length}}</h2>
 <h2>Explicit: {{explicitness}}</h2> --}}
-{{> track_list}}
+</div>
 {{#if can_update}}
   <form action="" method="post">
     <h3>Update playlist</h3>
@@ -30,3 +31,18 @@
     </div>
   </form>
 {{/if}}
+<h3>Tracks on Playlist</h3>
+<div>
+  <p>{{message}}</p>
+</div>
+<div>
+  <button id="add-to-playlist">Add to Playlist</button>
+</div>
+<div id="user-activity"></div>
+<div>
+  <a href="/user">User Home</a>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" defer ></script>
+<script src="/javascripts/playlistAddTrackTemplate.js" defer ></script>
+<script src="/javascripts/TrackListTemplate.js" defer ></script>
+<script src="/javascripts/playlistDash.js" defer ></script>
