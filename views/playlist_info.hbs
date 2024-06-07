@@ -1,48 +1,36 @@
-<h1>Playlist Info</h1>
-<h1>Name: {{name}}</h1>
-<h2>Creator: {{username}}</h2>
-<meta name="playlist-id" content="{{ playlist_id }}">
-{{!-- <h2>Length: {{length}}</h2>
-<h2>Explicit: {{explicitness}}</h2> --}}
+<div class='flex justify-center items-center relative'>
+  <div class='w-full bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 relative'>
+    <h1>Playlist Info</h1>
+    <h1>Name: {{name}}</h1>
+    <h2>Creator: {{username}}</h2>
+    {{!-- <h2>Length: {{length}}</h2>
+    <h2>Explicit: {{explicitness}}</h2> --}}
+    {{> track_list}}
+    {{#if can_update}}
+      <form action="" method="post">
+        <h3>Update playlist</h3>
+        <div>
+          <p>{{message}}</p>
+        </div>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" name="name" id="name" />
+        </div>
+        <fieldset>
+          <legend>Public:</legend>
+          <div>
+            <input type="radio" id="false" name="is_public" value="0" />
+            <label for="false">False</label>
+          </div>
+          <div>
+            <input type="radio" id="true" name="is_public" value="1" />
+            <label for="true">True</label>
+          </div>
+        </fieldset>
+        <div>
+          <input type="submit" value="Update" />
+        </div>
+      </form>
+    {{/if}}
+  </div>
 </div>
-{{#if can_update}}
-  <form action="" method="post">
-    <h3>Update playlist</h3>
-    <div>
-      <p>{{message}}</p>
-    </div>
-    <div>
-      <label for="name">Name:</label>
-      <input type="text" name="name" id="name" />
-    </div>
-    <fieldset>
-      <legend>Public:</legend>
-      <div>
-        <input type="radio" id="false" name="is_public" value="0" />
-        <label for="false">False</label>
-      </div>
-      <div>
-        <input type="radio" id="true" name="is_public" value="1" />
-        <label for="true">True</label>
-      </div>
-    </fieldset>
-    <div>
-      <input type="submit" value="Update" />
-    </div>
-  </form>
-{{/if}}
-<h3>Tracks on Playlist</h3>
-<div>
-  <p>{{message}}</p>
-</div>
-<div>
-  <button id="add-to-playlist">Add to Playlist</button>
-</div>
-<div id="user-activity"></div>
-<div>
-  <a href="/user">User Home</a>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" defer ></script>
-<script src="/javascripts/playlistAddTrackTemplate.js" defer ></script>
-<script src="/javascripts/TrackListTemplate.js" defer ></script>
-<script src="/javascripts/playlistDash.js" defer ></script>
