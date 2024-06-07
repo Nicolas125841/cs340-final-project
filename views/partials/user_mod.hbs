@@ -1,19 +1,23 @@
-<div class='flex justify-center items-center relative'>
+<div class='flex flex-col justify-center items-center relative'>
   <form action="/user" method="post">
     <h3 class='font-bold text-2xl' >Update account details</h3>
-    <div>
-      <label for="name">New username:</label>
-      <input type="text" name="username" id="username" />
-    </div>
-    <div>
-      <label for="name">New name:</label>
-      <input type="text" name="name" id="name" />
-    </div>
-    <div>
-      <input type="submit" value="Update" />
-    </div>
-  </form>
+    <div class='w-full p-4 flex flex-col'>
+      <div class='flex flex-col w-full items-start'>
+        <div class='flex flex-col justify-between items-center mb-5 w-full'>
+          <label for="name">New username:</label>
+          <input type="text" name="username" id="username" />
+        </div>
+        <div class='flex flex-col justify-between items-center mb-5 w-full'>
+          <label for="name">New name:</label>
+          <input type="text" name="name" id="name" />
+        </div>
+      </div>  
+      <div>
+        <button type="submit" value="Update" class='text-white font-bold py-2 px-4 rounded bg-slate-600'>Update</button>
+      </div>
+    </form>
+  </div>
   <form action="/user/remove" method="post">
-      <input type="submit" value="Remove Account" />
+      <button type="submit" value="Remove Account" class='text-white font-bold py-2 px-4 rounded bg-red-600'>Remove Account</button>
   </form>
 </div>
