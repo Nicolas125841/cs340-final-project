@@ -67,3 +67,4 @@ secret.sh
 env.sh
 
 package-lock.json
+setup.sh

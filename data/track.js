@@ -22,6 +22,27 @@ module.exports = {
 
         return [];
     },
+    getTracksWithArtist: async (parameters) => {
+        try {
+            let filter = '';
+            let terms = [];
+
+            for (const [parameter, term] of Object.entries(parameters)) {
+                filter = filter + (filter.length ? ' AND' : '') + ' `Track`.`' + parameter + '` = ?';
+                terms.push(term);
+            }
+
+            const [results] = await db.query('SELECT `Track`.*, `Artist`.`name` AS `artist_name` FROM `Track` JOIN `Artist` ON `Track`.`artist_id` = `Artist`.`artist_id` ' + (terms.length ? 'WHERE' + filter : ''), terms);
+
+            if(results.length) {
+                return results;
+            }
+        } catch(error) {
+            console.error(error);
+        }
+
+        return [];
+    },
     createTrack: async (title, artist_id, genre, length, is_explicit) => {
         try {
             const [results] = await db.query('INSERT INTO `Track` (`title`, `artist_id`, `genre`, `length`, `explicitness`) VALUES (?, ?, ?, ?, ?)', [title, artist_id, genre, length, is_explicit]);

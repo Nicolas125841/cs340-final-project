@@ -5,7 +5,7 @@ var trackData = require('../data/track');
 var router = express.Router();
 
 router.get('/', async function(req, res, next) {
-  res.render('track_search', { tracks: await trackData.getTracks({})});
+  res.render('track_search', { tracks: await trackData.getTracksWithArtist({})});
 });
 
 router.post('/', async function(req, res, next) {
