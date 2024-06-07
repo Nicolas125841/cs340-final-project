@@ -16,17 +16,21 @@
       <h1 class='text-xl font-bold'>Joined on: {{dateFormat join_date "MMMM Do, YYYY"}}</h1>
     </div>
     <div class='content flex flex-row w-full'>
-    <div class="flex items-center justify-center p-4 w-1/2">
-        <div class="flex flex-col p-4 space-x-2">
+    <div class="flex flex-col items-center justify-center p-4 w-1/2">
+        <div class="w-1/2 text-center">
+          <h1 class='text-xl font-bold'>Select an Option:</h1>
+        </div>
+        <div class="flex flex-row p-4">
           <button id="playlist-button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Playlists</button>
           <button id="create-button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Create Playlist</button>
           <button id="delete-button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete Playlist</button>
           <button id="modify-button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Modify Info</button>
         </div>
+
       </div>
       <div class='playlist-list w-1/2 text-center'>
-        <h1 class='text-2xl font-bold'>Playlists</h1>
-        <div id="user-activity"></div>
+        {{!-- <h1 class='text-2xl font-bold'>Playlists</h1> --}}
+        <ul id="user-activity"></ul>
       </div>
     </div>
     <div>

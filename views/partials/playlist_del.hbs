@@ -1,15 +1,17 @@
-<form action="/playlist/delete" method="post">
-  <h3>Delete playlist</h3>
-  <fieldset>
-    <legend>Playlists:</legend>
-    {{#each playlists}}
-      <div>
-        <input type="radio" id="{{playlist_id}}" name="playlist_id" value="{{playlist_id}}" />
-        <label for="{{playlist_id}}">{{playlist_id}}: {{name}}</label>
-      </div>
-    {{/each}}
-  </fieldset>
-  <div>
-    <input type="submit" value="Delete" />
-  </div>
-</form>
+<div class='flex justify-center items-center relative'>
+  <form action="/playlist/delete" method="post">
+    <h3 class='font-bold text-2xl' >Delete playlist</h3>
+    <fieldset>
+      <legend>Playlists:</legend>
+      {{#each playlists}}
+        <div>
+          <input type="radio" id="{{playlist_id}}" name="playlist_id" value="{{playlist_id}}" />
+          <label for="{{playlist_id}}">{{playlist_id}}: {{name}}</label>
+        </div>
+      {{/each}}
+    </fieldset>
+    <div>
+      <input type="submit" value="Delete" />
+    </div>
+  </form>
+</div>

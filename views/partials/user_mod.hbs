@@ -1,17 +1,19 @@
-<form action="/user" method="post">
-  <h3>Update account details</h3>
-  <div>
-    <label for="name">New username:</label>
-    <input type="text" name="username" id="username" />
-  </div>
-  <div>
-    <label for="name">New name:</label>
-    <input type="text" name="name" id="name" />
-  </div>
-  <div>
-    <input type="submit" value="Update" />
-  </div>
-</form>
-<form action="/user/remove" method="post">
-    <input type="submit" value="Remove Account" />
-</form>
+<div class='flex justify-center items-center relative'>
+  <form action="/user" method="post">
+    <h3 class='font-bold text-2xl' >Update account details</h3>
+    <div>
+      <label for="name">New username:</label>
+      <input type="text" name="username" id="username" />
+    </div>
+    <div>
+      <label for="name">New name:</label>
+      <input type="text" name="name" id="name" />
+    </div>
+    <div>
+      <input type="submit" value="Update" />
+    </div>
+  </form>
+  <form action="/user/remove" method="post">
+      <input type="submit" value="Remove Account" />
+  </form>
+</div>
