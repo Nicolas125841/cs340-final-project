@@ -1,16 +1,27 @@
-<h1>Login</h1>
-<form action="/artist/login" method="post">
-  <div>
-    <p>{{message}}</p>
-  </div>
-  <div>
-    <label for="name">Enter your artist ID:</label>
-    <input type="text" name="artist_id" id="artist_id" required />
-  </div>
-  <div>
-    <input type="submit" value="Login" />
-  </div>
-</form>
-<div>
-  <a href="/artist/register">Register</a>
+<div class='flex justify-center items-center'>
+  <div class='w-1/3 bg-white p-6 rounded-lg shadow-lg'>
+    <div class='w-full items-center justify-center flex mb-6'>
+      <h1 class='font-bold text-2xl'>Login</h1>
+    </div>
+    <form action="" method="post">
+      <div>
+        <p>{{message}}</p>
+      </div>
+      
+      <div class="mb-4">
+        <label for="name" class="block text-gray-700 text-sm font-bold mb-2" for="artist_id">
+          Artist ID
+        </label>
+        <div class='flex flex-row'>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="artist_id" id="artist_id" type="text" placeholder="Artist ID" required>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" value="Login" />submit</button>
+        </div>
+      </div>
+    </form>
+    <div class='text-center'>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" value="Register">
+        <a href="/artist/register">Register</a>
+      </button>
+    </div>
+  </div>  
 </div>

@@ -1,4 +1,4 @@
-<h1>Dash</h1>
+{{!-- <h1>Dash</h1>
 <h1>ID: {{artist_id}}</h1>
 <h2>Name: {{name}}</h2>
 <h2>Join date: {{join_date}}</h2>
@@ -15,10 +15,52 @@
 <div id="artist-activity"></div>
 <div>
   <a href="/artist/logout">Logout</a>
+</div> --}}
+
+<div class='flex justify-center items-center relative'>
+  <div class='w-full bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 relative'>
+    <div class='absolute top-5 left-5'>
+      <a href="/artist/logout">Logout</a>
+    </div>
+    <div class='title text-center'>
+      <h1 class='text-2xl font-bold'>Dashboard</h1>
+    </div>
+    <div class='username text-center'>
+      <h1 class='text-xl font-bold'>ID: {{artist_id}}</h1>
+    </div>
+    <div class='name text-center'>
+      <h1 class='text-xl font-bold'>Name: {{name}}</h1>
+    </div>
+    <div class='join-date text-center'>
+      <h1 class='text-xl font-bold'>Joined on: {{dateFormat join_date "MMMM Do, YYYY"}}</h1>
+    </div>
+    {{#if proucer}}
+      <div class='join-date text-center'>
+        <h1 class='text-xl font-bold'>Producer: {{producer}}</h1>
+      </div>
+    {{/if}}
+    <div class='content flex flex-row w-full'>
+    <div class="flex items-center justify-center p-4 w-1/2">
+        <div class="flex flex-col p-4 space-x-2">
+          <button id="track-button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Tracks</button>
+          <button id="create-button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Create Track</button>
+          <button id="delete-button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete Track</button>
+          <button id="modify-button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Modify Info</button>
+        </div>
+      </div>
+      <div class='playlist-list w-1/2 text-center'>
+        <h1 class='text-2xl font-bold'>Tracks</h1>
+        <div id="artist-activity"></div>
+      </div>
+    </div>
+    <div>
+      <p>{{message}}</p>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" defer ></script>
+    <script src="/javascripts/trackListTemplate.js" defer ></script>
+    <script src="/javascripts/trackCreateTemplate.js" defer ></script>
+    <script src="/javascripts/trackDeleteTemplate.js" defer ></script>
+    <script src="/javascripts/artistModifyTemplate.js" defer ></script>
+    <script src="/javascripts/artistDash.js" defer ></script>
+  </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" defer ></script>
-<script src="/javascripts/trackListTemplate.js" defer ></script>
-<script src="/javascripts/trackCreateTemplate.js" defer ></script>
-<script src="/javascripts/trackDeleteTemplate.js" defer ></script>
-<script src="/javascripts/artistModifyTemplate.js" defer ></script>
-<script src="/javascripts/artistDash.js" defer ></script>
