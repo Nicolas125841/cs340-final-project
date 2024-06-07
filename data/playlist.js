@@ -11,7 +11,7 @@ module.exports = {
                 terms.push(term);
             }
 
-            const [results] = await db.query('SELECT `Playlist`.*, SUM(`Track`.`length`) AS `length`, MAX(`Track`.`explicitness`) AS `is_explicit` FROM (`Playlist` JOIN `TrackInPlaylist` USING (`playlist_id`)) JOIN `Track` USING (`artist_id`, `title`) GROUP BY `Playlist`.`playlist_id`' + (terms.length ? ' HAVING' + filter : ''), terms);
+            const [results] = await db.query('SELECT `Playlist`.*, IF(`Track`.`length` IS NULL, 0, SUM(`Track`.`length`)) AS `length`, MAX(`Track`.`explicitness`) AS `is_explicit` FROM `Playlist` LEFT JOIN (`TrackInPlaylist` JOIN `Track` USING (`artist_id`, `title`)) ON `Playlist`.`playlist_id` = `TrackInPlaylist`.`playlist_id` GROUP BY `Playlist`.`playlist_id`' + (terms.length ? ' HAVING' + filter : ''), terms);
 
             if(results.length) {
                 return results;
