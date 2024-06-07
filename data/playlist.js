@@ -7,11 +7,11 @@ module.exports = {
             let terms = [];
 
             for (const [parameter, term] of Object.entries(parameters)) {
-                filter = filter + (filter.length ? ' AND' : '') + ' `' + parameter + '` = ?';
+                filter = filter + (filter.length ? ' AND' : '') + ' `Playlist`.`' + parameter + '` = ?';
                 terms.push(term);
             }
 
-            const [results] = await db.query('SELECT * FROM `Playlist` ' + (terms.length ? 'WHERE' + filter : ''), terms);
+            const [results] = await db.query('SELECT `Playlist`.*, SUM(`Track`.`length`) AS `length`, MAX(`Track`.`explicitness`) AS `is_explicit` FROM (`Playlist` JOIN `TrackInPlaylist` USING (`playlist_id`)) JOIN `Track` USING (`artist_id`, `title`) GROUP BY `Playlist`.`playlist_id`' + (terms.length ? ' HAVING' + filter : ''), terms);
 
             if(results.length) {
                 return results;

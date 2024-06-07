@@ -7,4 +7,4 @@ handlebars ./views/partials/playlist_cre.hbs -f ./public/javascripts/playlistCre
 handlebars ./views/partials/playlist_del.hbs -f ./public/javascripts/playlistDeleteTemplate.js
 handlebars ./views/partials/playlist_add.hbs -f ./public/javascripts/playlistAddTrackTemplate.js
 handlebars ./views/partials/user_mod.hbs -f ./public/javascripts/userModifyTemplate.js
-npx tailwindcss -i ./src/input.css -o ./public/stylesheets/output.css --watch &
+npx tailwindcss -i ./src/input.css -o ./public/stylesheets/output.css

@@ -1,14 +1,18 @@
-<h1>Search Playlists:</h1>
+<h1 class="text-2xl font-bold mb-4">Search Playlists:</h1>
 <div>
   {{#each playlists}}
     <div>
-      <p>{{name}} by {{username}}</p>
-      {{!-- <p>
-        Length: {{length}}
-        {{#if is_explicit}}
-          | <bold>explicit</bold>
-        {{/if}}
-      </p> --}}
+      <a class='font-bold' href="/playlist/{{playlist_id}}">
+        <div class="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm">
+          <p class="text-lg font-semibold">{{name}} by {{username}}</p>
+          <p class="text-sm text-gray-600">
+            Length: {{length}}
+            {{#if is_explicit}}
+              | <span class="font-bold text-red-500">explicit</span>
+            {{/if}}
+          </p>
+        </div>
+      </a>
     </div>
   {{/each}}
 </div>

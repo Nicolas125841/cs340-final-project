@@ -1,15 +1,16 @@
 <h1 class="text-2xl font-bold mb-4">Search Tracks:</h1>
 <div>
   {{#each tracks}}
-    <div class="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm">
-      <p class="text-lg font-semibold">{{title}} by {{artist_name}} | {{genre}}</p>
-      <p class="text-sm text-gray-600">
-        Length: {{length}}
-        {{#if is_explicit}}
-          | <span class="font-bold text-red-500">explicit</span>
-        {{/if}}
-      </p>
-    </div>
-    
+    <a class='font-bold' href="/track/{{artist_id}}/{{title}}">
+      <div class="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm">
+        <p class="text-lg font-semibold">{{title}} by {{artist_name}} | {{genre}}</p>
+        <p class="text-sm text-gray-600">
+          Length: {{length}}
+          {{#if is_explicit}}
+            | <span class="font-bold text-red-500">explicit</span>
+          {{/if}}
+        </p>
+      </div>
+    </a>
   {{/each}}
 </div>
