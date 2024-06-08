@@ -23,9 +23,7 @@ router.post('/', async function(req, res, next) {
 router.get('/:artist_id/:title', async function(req, res, next) {
   let track;
 
-  if(req.params.title && req.params.artist_id && (track = await trackData.getTracks({ title: req.params.title, artist_id: req.params.artist_id })) && track.length === 1) {
-    console.log(typeof req.session.artist_id, typeof req.params.artist_id, typeof track[0].artist_id);
-    
+  if(req.params.title && req.params.artist_id && (track = await trackData.getTracksWithArtist({ title: req.params.title, artist_id: req.params.artist_id })) && track.length === 1) {    
     res.render('track_info', { ...track[0], can_update: req.session.artist_id === `${track[0].artist_id}` });
   } else {
     res.status(404).render('error', { message: 'Track does not exist' });
@@ -36,7 +34,7 @@ router.post('/:artist_id/:title', async function(req, res, next) {
   if(req.session.artist_id && await artistData.getArtist(req.session.artist_id)) {
     let newTrack, oldTrack;
 
-    if(req.params.title && (oldTrack = await trackData.getTracks({ title: req.params.title, artist_id: req.session.artist_id })) && oldTrack.length === 1) {
+    if(req.params.title && (oldTrack = await trackData.getTracksWithArtist({ title: req.params.title, artist_id: req.session.artist_id })) && oldTrack.length === 1) {
       newTrack = {
         title: oldTrack[0].title,
         artist_id: oldTrack[0].artist_id,
@@ -46,7 +44,7 @@ router.post('/:artist_id/:title', async function(req, res, next) {
       };
 
       if(await trackData.updateTrack(newTrack, req.params.title, req.session.artist_id)) {
-        res.render('track_info', { ...newTrack, can_update: req.session.artist_id === `${newTrack.artist_id}` });
+        res.render('track_info', { ...newTrack, artist_name: oldTrack.artist_name, can_update: req.session.artist_id === `${newTrack.artist_id}` });
       } else {
         res.render('track_info', { ...oldTrack, message: 'Could not update track', can_update: req.session.artist_id === `${oldTrack.artist_id}` });
       }

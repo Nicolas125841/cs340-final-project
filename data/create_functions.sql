@@ -12,7 +12,6 @@ BEGIN
 	END IF;
 END; //
 
-DELIMITER //
 CREATE PROCEDURE reindexPlaylist (playlistId INT)
 BEGIN
 	DECLARE correctIndex INT DEFAULT 0;
@@ -40,7 +39,6 @@ BEGIN
 	WHERE `playlist_id` = playlistId;
 END; //
 
-DELIMITER //
 CREATE FUNCTION clonePlaylist (playlistId INT, dstUser VARCHAR(20))
 RETURNS INT
 BEGIN

@@ -25,42 +25,6 @@ router.post('/', async function(req, res, next) {
   }
 });
 
-router.post('/get_playlist', async function(req, res, next) {
-  if(req.body.user_query) {
-    if(req.session.username && await userData.getUser(req.session.username)) {
-      res.status(200).json(await playlistData.getPlaylists({ username: req.session.username, playlist_id: req.body.playlist_id }));
-    } else {
-      res.status(400).json({ message: 'Invalid user session' });
-    }
-  } else {
-    res.status(200).json(await playlistData.getPlaylists({ public: 1 }));
-  }
-});
-
-router.post('/get_tracks', async function(req, res, next) {
-  if(req.body.user_query) {
-    if(req.session.username && await userData.getUser(req.session.username)) {
-      res.status(200).json(await playlistTrackData.getTracksInPlaylist({playlist_id: req.body.playlist_id}));
-    } else {
-      res.status(400).json({ message: 'Database not working' });
-    }
-  } else {
-    res.status(200).json(await playlistTrackData.getTracksInPlaylist({playlist_id: req.body.playlist_id}));
-  }
-});
-
-router.post('/remaining_tracks', async function(req, res, next) {
-  if(req.body.user_query) {
-    if(req.session.username && await userData.getUser(req.session.username)) {
-      res.status(200).json(await playlistTrackData.tracksNotInPlaylist(req.body.playlist_id));
-    } else {
-      res.status(400).json({ message: 'Database not working' });
-    }
-  } else {
-    res.status(200).json(await playlistData.getPlaylists({ public: 1 }));
-  }
-});
-
 router.post('/create', async function(req, res, next) {
   let user;
 
@@ -120,9 +84,7 @@ router.post('/:playlist_id/add', async function(req, res, next) {
 });
 
 router.post('/:playlist_id/rem', async function(req, res, next) {
-  let user;
-
-  if(req.session.username && (user = await userData.getUser(req.session.username))) {
+  if(req.session.username && await userData.getUser(req.session.username)) {
     let playlist;
 
     if(req.params.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.params.playlist_id, username: req.session.username })) && playlist.length === 1) {
@@ -138,7 +100,6 @@ router.post('/:playlist_id/rem', async function(req, res, next) {
   
           if(!(await playlistTrackData.removeTrackFromPlaylistReal(parseInt(idx), parseInt(req.params.playlist_id)))) {
             playlistData.reindexPlaylist(req.params.playlist_id);
-            
             res.render('playlist_info', { ...playlist[0], can_update: req.session.username === playlist[0].username, message: `Could not remove ${title} from ${playlist[0].name}`});
             
             return;
@@ -146,7 +107,6 @@ router.post('/:playlist_id/rem', async function(req, res, next) {
         }
 
         playlistData.reindexPlaylist(req.params.playlist_id);  
-
         res.render('playlist_info', { ...playlist[0], tracks: await playlistTrackData.getTracksInPlaylist({ playlist_id: req.params.playlist_id }), can_update: req.session.username === playlist[0].username, message: `Successfully deleted all selected tracks!`});
       } else {
         res.render('playlist_info', { ...playlist[0], tracks: await playlistTrackData.getTracksInPlaylist({ playlist_id: req.params.playlist_id }), can_update: req.session.username === playlist[0].username, message: `No tracks to delete`});

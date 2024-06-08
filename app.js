@@ -14,7 +14,7 @@ var playlistRouter = require('./routes/playlist');
 var cookieSession = require('cookie-session');
 var app = express();
 
-// register partials
+// register partials and helpers
 hbs.registerPartials(__dirname + '/views/partials');
 hbs.registerHelper('dateFormat', require('handlebars-dateformat'));
 

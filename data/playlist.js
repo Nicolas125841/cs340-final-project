@@ -85,6 +85,6 @@ module.exports = {
             console.error(error);
         }
 
-        return false;
+        return 0;
     }
 };
