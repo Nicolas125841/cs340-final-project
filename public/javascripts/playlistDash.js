@@ -3,7 +3,7 @@
     let playlistAdd = document.getElementById('add-to-playlist');
     let playlist_id = document.querySelector('meta[name="playlist-id"]').content
   
-     const showTracks = async () => {
+     const showTracksToRemove = async () => {
         let response_2 = await fetch('/playlist/get_tracks', {
             method: 'POST',
             headers: {
@@ -15,7 +15,7 @@
 
           console.log(tracks);
       
-          let listHtml_2 = Handlebars.templates['track_list.hbs']( {tracks: tracks} );
+          let listHtml_2 = Handlebars.templates['track_rem.hbs']( {tracks: tracks} );
       
           activitySection.replaceChildren();
           activitySection.insertAdjacentHTML('beforeend',listHtml_2);
@@ -51,5 +51,5 @@
     playlistAdd.addEventListener('click', showTracksToAdd);
  
  
-    showTracks();
+    //showTracks();
   })();

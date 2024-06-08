@@ -75,6 +75,7 @@ router.post('/create', async function(req, res, next) {
 
 router.post('/add', async function(req, res, next) {
   let user;
+  let title_;
 
   if(req.session.username && (user = await userData.getUser(req.session.username))) {
     let playlist;
@@ -104,11 +105,12 @@ router.post('/add', async function(req, res, next) {
         if(await playlistTrackData.addTrackToPlaylistReal(offset[0]['COUNT(*)']+1, playlist[0].playlist_id, title, parseInt(id))) {
             //res.render('playlist_info', { message: `Successfully added ${title} to ${playlist[0].name}`}); //`Deleted playlist ${playlist[0].name}` });
         } else {
-            res.render('playlist_info', { message: `Could not add ${title} to ${playlist[0].name}` });
+            res.render('playlist_info', { name: playlist[0].name, creator: playlist[0].username, playlist_id: playlist[0].playlist_id, can_update: true, message: `Could not add ${title} to ${playlist[0].name}` });
         }
       }
 
-      res.render('playlist_info', { message: `Nice`}); //`Deleted playlist ${playlist[0].name}` });
+      console.log(user);
+      res.render('playlist_info', { name: user.name, username: user.username, playlist_id: req.body.playlist_id, tracks: await playlistTrackData.getTracksInPlaylist({playlist_id: req.body.playlist_id}), can_update: true, message: `Successfully added all selected tracks!`}); //`Deleted playlist ${playlist[0].name}` });
 
     } else {
       req.session.username = null;

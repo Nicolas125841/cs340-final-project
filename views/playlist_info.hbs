@@ -5,6 +5,7 @@
     <h2>Creator: {{username}}</h2>
     {{!-- <h2>Length: {{length}}</h2>
     <h2>Explicit: {{explicitness}}</h2> --}}
+    <h3>Tracks</h3>
     {{> track_list}}
     {{#if can_update}}
       <form action="" method="post">
@@ -34,3 +35,21 @@
     {{/if}}
   </div>
 </div>
+<meta name="playlist-id" content="{{playlist_id}}">
+<div>
+  <p>{{message}}</p>
+</div>
+<div>
+  <button id="add-to-playlist">Add to Playlist</button>
+</div>
+<div>
+  <button id="delete-from-playlist">Delete from Playlist</button>
+</div>
+<div id="user-activity"></div>
+<div>
+  <a href="/user">User Home</a>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" defer ></script>
+<script src="/javascripts/playlistAddTrackTemplate.js" defer ></script>
+<script src="/javascripts/TrackListTemplate.js" defer ></script>
+<script src="/javascripts/playlistDash.js" defer ></script>
