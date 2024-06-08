@@ -1,36 +1,40 @@
-<div class="w-full mb-5">
-  <a class="text-blue-500" href="/user">User Home</a>
-  <span> | </span>
-  <a class="text-blue-500" href="/artist">Artist Home</a>
-  <span> | </span>
-  <a class="text-blue-500" href="/track">Tracks</a>
-  <span> | </span>
-  <a class="text-blue-500" href="/playlist">Playlists</a>
-</div>
-<h1 class="text-2xl font-bold mb-4">Search Playlists:</h1>
-<div>
-  {{#each playlists}}
-    <div>
-      <div class="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm flex flex-row justify-between">
-        <div class='flex-grow'>
-          <a class='font-bold' href="/playlist/{{playlist_id}}">
-            <p class="text-lg font-semibold">{{name}} by {{username}}</p>
-            <p class="text-sm text-gray-600">
-              Length: {{length}}
-              {{#if is_explicit}}
-                | <span class="font-bold text-red-500">explicit</span>
-              {{/if}}
-            </p>
-          </a>
-        </div>
-        {{#if ../can_clone}}
-          <p>
-            <a href="/playlist/clone/{{playlist_id}}">
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Clone</button>
-            </a>
-          </p>
-        {{/if}}
-      </div>
+<div class='flex justify-center items-center relative'>
+  <div class='w-full bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 relative'>
+    <div class="w-full mb-5">
+      <a class="text-blue-500" href="/user">User Home</a>
+      <span> | </span>
+      <a class="text-blue-500" href="/artist">Artist Home</a>
+      <span> | </span>
+      <a class="text-blue-500" href="/track">Tracks</a>
+      <span> | </span>
+      <a class="text-blue-500" href="/playlist">Playlists</a>
     </div>
-  {{/each}}
+    <h1 class="text-2xl font-bold mb-4">Search Playlists:</h1>
+    <div>
+      {{#each playlists}}
+        <div>
+          <div class="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm flex flex-row justify-between">
+            <div class='flex-grow'>
+              <a class='font-bold' href="/playlist/{{playlist_id}}">
+                <p class="text-lg font-semibold">{{name}} by {{username}}</p>
+                <p class="text-sm text-gray-600">
+                  Length: {{length}}
+                  {{#if is_explicit}}
+                    | <span class="font-bold text-red-500">explicit</span>
+                  {{/if}}
+                </p>
+              </a>
+            </div>
+            {{#if ../can_clone}}
+              <p>
+                <a href="/playlist/clone/{{playlist_id}}">
+                  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Clone</button>
+                </a>
+              </p>
+            {{/if}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
 </div>
