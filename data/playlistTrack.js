@@ -42,6 +42,34 @@ module.exports = {
     return [];
 
     },
+    updateIndices: async (new_idx, old_idx, playlist_id) => {
+
+        try {
+            const [result] = await db.query('UPDATE `TrackInPlaylist` SET idx = ? WHERE idx = ? AND playlist_id = ?', [new_idx, old_idx, playlist_id]); 
+            if (result.affectedRows === 1) {
+                return true;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+        return false;
+    },
+    removeTrackFromPlaylistReal: async (idx, playlist_id) => {
+        try {
+
+            const [results] = await db.query('DELETE FROM `TrackInPlaylist` WHERE `idx` = ? AND `playlist_id` = ?', [idx, playlist_id]);
+
+            if (results.affectedRows === 1) {
+                return true;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+        return false;
+
+    },
     addTrackToPlaylistReal: async (idx, playlist_id, title, artist_id) => {
         try {
 

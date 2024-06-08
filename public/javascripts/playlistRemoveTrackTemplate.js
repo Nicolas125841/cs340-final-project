@@ -48,6 +48,6 @@ templates['playlist_rem.hbs'] = template({"1":function(container,depth0,helpers,
     + ((stack1 = lookupProperty(helpers,"each").call(alias1,(depth0 != null ? lookupProperty(depth0,"playlists") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":5,"column":3},"end":{"line":10,"column":13}}})) != null ? stack1 : "")
     + "  </fieldset>\n  <fieldset>\n    <legend>Tracks:</legend>\n"
     + ((stack1 = lookupProperty(helpers,"each").call(alias1,(depth0 != null ? lookupProperty(depth0,"tracks") : depth0),{"name":"each","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":14,"column":4},"end":{"line":19,"column":13}}})) != null ? stack1 : "")
-    + "  </fieldset>\n  <div>\n    <input type=\"submit\" value=\"Add\" />\n  </div>\n</form>";
+    + "  </fieldset>\n  <div>\n    <input type=\"submit\" value=\"Remove\" />\n  </div>\n</form>";
 },"useData":true});
 })();
