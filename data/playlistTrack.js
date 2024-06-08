@@ -15,7 +15,7 @@ module.exports = {
 
             console.log(filter, terms);
 
-            const [results] = await db.query('SELECT * FROM `TrackInPlaylist` ' + (terms.length ? 'WHERE' + filter : ''), terms);
+            const [results] = await db.query('SELECT * FROM `TrackInPlaylist` JOIN `Artist` USING (`artist_id`) ' + (terms.length ? 'WHERE' + filter : ''), terms);
 
             if(results.length) {
                 return results;

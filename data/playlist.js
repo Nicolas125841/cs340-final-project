@@ -60,5 +60,20 @@ module.exports = {
         }
 
         return false;
+    },
+    clonePlaylist: async (playlist_id, username) => {
+        try {
+            const [results] = await db.query('SELECT clonePlaylist(?, ?) AS `playlist_id`', [playlist_id, username]);
+
+            if(results.length === 1) {
+                return results[0].playlist_id;
+            } else {
+                return 0;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+        return 0;
     }
 };

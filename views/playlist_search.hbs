@@ -2,17 +2,24 @@
 <div>
   {{#each playlists}}
     <div>
-      <a class='font-bold' href="/playlist/{{playlist_id}}">
-        <div class="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm">
-          <p class="text-lg font-semibold">{{name}} by {{username}}</p>
-          <p class="text-sm text-gray-600">
-            Length: {{length}}
-            {{#if is_explicit}}
-              | <span class="font-bold text-red-500">explicit</span>
-            {{/if}}
-          </p>
+      <div class="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm flex flex-row justify-between">
+        <div class='flex-grow'>
+          <a class='font-bold' href="/playlist/{{playlist_id}}">
+            <p class="text-lg font-semibold">{{name}} by {{username}}</p>
+            <p class="text-sm text-gray-600">
+              Length: {{length}}
+              {{#if is_explicit}}
+                | <span class="font-bold text-red-500">explicit</span>
+              {{/if}}
+            </p>
+          </a>
         </div>
-      </a>
+        <p>
+          <a href="/playlist/clone/{{playlist_id}}">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Clone</button>
+          </a>
+        </p>
+      </div>
     </div>
   {{/each}}
 </div>

@@ -1,7 +1,15 @@
-<div class='bg-blue'>
+<div class='p-8'>
+  <h3 class='font-bold text-2xl text-center' >Tracks</h3>
   {{#each tracks}}
-    <div class='w-full bg-white'>
-      <a class='font-bold' href="/track/{{artist_id}}/{{title}}">{{title}}</a>
+    <div class='flex justify-center items-center relative'>
+      <button class='text-white font-bold py-2 px-4 rounded bg-slate-600 mt-4' >
+        <a class='font-bold' href="/track/{{artist_id}}/{{title}}">
+          {{title}}
+          {{#if name}}  
+            by {{name}}
+          {{/if}}
+        </a>
+      </button>
     </div>
   {{/each}}
 </div>

@@ -21,7 +21,7 @@ templates['playlist_list.hbs'] = template({"1":function(container,depth0,helpers
         return undefined
     };
 
-  return "<div class='p-8'>\r\n  <h3 class='font-bold text-2xl' >Playlists</h3>\r\n"
+  return "<div class='p-8'>\r\n  <h3 class='font-bold text-2xl' >Your Playlists</h3>\r\n"
     + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"playlists") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":3,"column":2},"end":{"line":9,"column":11}}})) != null ? stack1 : "")
     + "</div>";
 },"useData":true});

@@ -1,36 +1,55 @@
-<h1>Track Info</h1>
-<h1>Title: {{title}}</h1>
-<h2>Artist ID: {{artist_id}}</h2>
-<h2>Genre: {{genre}}</h2>
-<h2>Length: {{length}}</h2>
-<h2>Explicit: {{explicitness}}</h2>
-{{#if can_update}}
-  <form action="" method="post">
-    <h3>Update track</h3>
-    <div>
-      <p>{{message}}</p>
+<div class='flex flex-row justify-center items-begin relative bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 relative'>
+  <div class="content flex flex-col shrink">
+    <div class='w-full mb-5'>
+      <h1 class='text-2xl font-bold'>Track Info</h1>
+      <h1 class='text-xl font-bold'>Title: {{title}}</h1>
+      <h1 class='text-xl font-bold'>Artist ID: {{artist_id}}</h1>
+      <h1 class='text-xl font-bold'>Genre: {{genre}}</h1>
+      <h1 class='text-xl font-bold'>Length: {{length}}</h1>
+      <h1 class='text-xl font-bold'>
+        Explicitness: 
+        {{#if explicitness}}
+          <span class='text-red-500'>Explicit</span>
+        {{else}}
+          <span>Clean</span>
+        {{/if}}
+      </h1>
     </div>
-    <div>
-      <label for="genre">Genre:</label>
-      <input type="text" name="genre" id="genre" />
+    <div class='w-full mt-5'>
+      {{#if can_update}}
+        <form action="" method="post">
+          <h3 class='font-bold text-2xl' >Update track details</h3>
+          <div class='w-full p-4 flex flex-col'>
+            <div class='flex flex-col w-full items-start'>
+              <div>
+                <p>{{message}}</p>
+              </div>
+              <div class='flex flex-row items-center text-center space-x-5 mt-5 mb-5'>
+                <label for="genre" class="block text-lg font-medium text-gray-700" >Genre:</label>
+                <input type="text" name="genre" id="genre" class="rounded mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+              <div class='flex flex-row items-center text-center space-x-5 mt-5 mb-5'>
+                <label for="length" class="block text-lg font-medium text-gray-700" >Length:</label>
+                <input type="number" name="length" id="length" class="rounded mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+              <fieldset class='w-full flex flex-row space-x-3 justify-start mb-5'>
+                <p class="text-lg font-medium text-gray-700">Explicitness</p>
+                <div>
+                  <input type="radio" id="false" name="is_explicit" value="0" />
+                  <label for="false">Clean</label>
+                </div>
+                <div>
+                  <input type="radio" id="true" name="is_explicit" value="1" />
+                  <label for="true">Explicit</label>
+                </div>
+              </fieldset>
+            </div>
+            <div>
+              <button type="submit" value="Update" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" >Update</button>
+            </div>
+          </div>
+        </form>
+      {{/if}}
     </div>
-    <div>
-      <label for="length">Length:</label>
-      <input type="number" name="length" id="length" />
-    </div>
-    <fieldset>
-      <legend>Explicit:</legend>
-      <div>
-        <input type="radio" id="false" name="is_explicit" value="0" />
-        <label for="false">False</label>
-      </div>
-      <div>
-        <input type="radio" id="true" name="is_explicit" value="1" />
-        <label for="true">True</label>
-      </div>
-    </fieldset>
-    <div>
-      <input type="submit" value="Update" />
-    </div>
-  </form>
-{{/if}}
+  </div>
+</div>

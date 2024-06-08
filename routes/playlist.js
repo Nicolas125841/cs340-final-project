@@ -146,6 +146,31 @@ router.post('/delete', async function(req, res, next) {
   }
 });
 
+router.get('/clone/:playlist_id', async function(req, res, next) {
+  let user;
+
+  if(req.session.username && (user = await userData.getUser(req.session.username))) {
+    let playlist;
+    let cloneId;
+
+    if(req.params.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.params.playlist_id, public: 1 })) && playlist.length === 1) {
+        if((cloneId = await playlistData.clonePlaylist(req.params.playlist_id, req.session.username))) {
+          res.redirect('/playlist/' + cloneId);
+        } else {
+          res.redirect('/');
+        }
+    } else {
+      req.session.username = null;
+
+      res.redirect('/user/login');
+    }
+  } else {
+    req.session.username = null;
+
+    res.redirect('/user/login');
+  }
+});
+
 router.get('/:playlist_id', async function(req, res, next) {
   let playlist;
 
