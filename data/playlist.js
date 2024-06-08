@@ -67,13 +67,24 @@ module.exports = {
 
             if(results.length === 1) {
                 return results[0].playlist_id;
-            } else {
-                return 0;
             }
         } catch (error) {
             console.error(error);
         }
 
         return 0;
+    },
+    reindexPlaylist: async (playlist_id) => {
+        try {
+            const [results] = await db.query('CALL reindexPlaylist(?)', [playlist_id]);
+
+            if(results.affectedRows) {
+                return results.affectedRows;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+        return false;
     }
 };

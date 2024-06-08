@@ -1,5 +1,14 @@
 <div class='flex flex-row justify-center items-begin relative bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 relative'>
   <div class="content flex flex-col shrink">
+    <div class="w-full mb-5">
+      <a class="text-blue-500" href="/user">User Home</a>
+      <span> | </span>
+      <a class="text-blue-500" href="/artist">Artist Home</a>
+      <span> | </span>
+      <a class="text-blue-500" href="/track">Tracks</a>
+      <span> | </span>
+      <a class="text-blue-500" href="/playlist">Playlists</a>
+    </div>
     <div class='w-full mb-5'>
       <h1 class='text-2xl font-bold'>Playlist Info</h1>
       <h1 class='text-xl font-bold'>Name: {{name}}</h1>
@@ -14,15 +23,15 @@
         {{/if}}
       </h1>
     </div>
-    <div class='w-full mt-5'>
-      {{#if can_update}}
+    {{#if can_update}}
+      <div class='w-full mt-5'>
+        <div class="text-xl">
+          <p>{{message}}</p>
+        </div>
         <form action="" method="post">
           <h3 class='font-bold text-2xl' >Update playlist details</h3>
           <div class='w-full p-4 flex flex-col'>
             <div class='flex flex-col w-full items-start'>
-              <div>
-                <p>{{message}}</p>
-              </div>
               <div class='flex flex-row items-center text-center space-x-5 mt-5 mb-5'>
                 <label for="name" class="block text-lg font-medium text-gray-700" >Name:</label>
                 <input type="text" name="name" id="name" class="rounded mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
@@ -44,29 +53,22 @@
             </div>
           </div>
         </form>
-      {{/if}}
-    </div>
+      </div>
+      <div id="playlist-add" class='w-full mt-5'></div>
+      <div class='w-full mt-5'>
+        {{> playlist_rem }}
+      </div>
+    {{/if}}
   </div>
   <div class="w-full grow">
     {{> track_list}}
   </div>
 </div>
 <meta name="playlist-id" content="{{playlist_id}}">
-<div>
-  <p>{{message}}</p>
-</div>
-<div>
-  <button id="add-to-playlist">Add to Playlist</button>
-</div>
-<div>
-  <button id="remove-from-playlist">Remove from Playlist</button>
-</div>
 <div id="user-activity"></div>
-<div>
-  <a href="/user">User Home</a>
-</div>
+<meta name="playlist-id" content="{{playlist_id}}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" defer ></script>
 <script src="/javascripts/playlistAddTrackTemplate.js" defer ></script>
 <script src="/javascripts/playlistRemoveTrackTemplate.js" defer></script>
-<script src="/javascripts/TrackListTemplate.js" defer ></script>
+<script src="/javascripts/trackListTemplate.js" defer ></script>
 <script src="/javascripts/playlistDash.js" defer ></script>

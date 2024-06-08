@@ -13,33 +13,31 @@ BEGIN
 END; //
 
 DELIMITER //
-CREATE FUNCTION getTrackRank (trackArtist INT, trackTitle VARCHAR(20))
-RETURNS INT
+CREATE PROCEDURE reindexPlaylist (playlistId INT)
 BEGIN
-	DECLARE trackRank INT;
-	DECLARE tipCheck INT;
+	DECLARE correctIndex INT DEFAULT 0;
+	DECLARE currentIndex INT;
+	DECLARE no_more_data BOOLEAN DEFAULT false;
+	DECLARE trackCursor CURSOR FOR SELECT `idx` FROM `TrackInPlaylist` WHERE `playlist_id` = playlistId AND `idx` >= 0 ORDER BY `idx`;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET no_more_data = true;
 
-	SELECT COUNT(*) INTO tipCheck FROM `TrackInPlaylist`;
+	OPEN trackCursor;
 
-	IF tipCheck = 0 THEN
-		RETURN 1;
-	END IF;
+	WHILE (no_more_data = false) DO
+		FETCH trackCursor INTO currentIndex;
 
-	IF ((trackArtist, trackTitle) IN (SELECT artist_id, title FROM `TrackInPlaylist`)) THEN
-		WITH `Ranking` AS 
-        	(SELECT t.artist_id, t.title, COUNT(DISTINCT p.username) as userCount, RANK() OVER(ORDER BY userCount DESC) rank 
-			FROM `Track` t NATURAL JOIN `TrackInPlaylist` tp NATURAL JOIN `Playlist` p
-			GROUP BY t.artist_id, t.title)
-		SELECT rank INTO trackRank FROM `Ranking` WHERE title = trackTitle AND artist_id = trackArtist;
-	ELSE
-		WITH `Ranking` AS 
-        	(SELECT t.artist_id, t.title, COUNT(DISTINCT p.username) as userCount, RANK() OVER(ORDER BY userCount DESC) rank 
-			FROM `Track` t NATURAL JOIN `TrackInPlaylist` tp NATURAL JOIN `Playlist` p
-			GROUP BY t.artist_id, t.title)
-		SELECT MAX(rank) + 1 INTO trackRank FROM `Ranking`;
-	END IF;
-	
-	RETURN trackRank;
+		UPDATE `TrackInPlaylist`
+		SET `idx` = correctIndex - 1
+		WHERE `idx` = currentIndex AND `playlist_id` = playlistId;
+
+		SET correctIndex = correctIndex - 1;
+	END WHILE;
+
+	CLOSE trackCursor;
+
+	UPDATE `TrackInPlaylist`
+	SET `idx` = -`idx` - 1
+	WHERE `playlist_id` = playlistId;
 END; //
 
 DELIMITER //

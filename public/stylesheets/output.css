@@ -1159,6 +1159,10 @@ input:checked + .toggle-bg {
   margin-inline-end: 0.5rem;
 }
 
+.ml-5 {
+  margin-left: 1.25rem;
+}
+
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -1618,9 +1622,9 @@ input:checked + .toggle-bg {
   line-height: 1.25;
 }
 
-.text-black {
+.text-blue-500 {
   --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
+  color: rgb(63 131 248 / var(--tw-text-opacity));
 }
 
 .text-blue-600 {

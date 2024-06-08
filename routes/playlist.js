@@ -6,7 +6,11 @@ var playlistTrackData = require('../data/playlistTrack');
 var router = express.Router();
 
 router.get('/', async function(req, res, next) {
-  res.render('playlist_search', { playlists: await playlistData.getPlaylists({ public: 1 })});
+  if(req.session.username && await userData.getUser(req.session.username)) {
+    res.render('playlist_search', { playlists: await playlistData.getPlaylists({ public: 1 }), can_clone: true });
+  } else {
+    res.render('playlist_search', { playlists: await playlistData.getPlaylists({ public: 1 }), can_clone: false });
+  }
 });
 
 router.post('/', async function(req, res, next) {
@@ -73,41 +77,36 @@ router.post('/create', async function(req, res, next) {
   }
 });
 
-router.post('/add', async function(req, res, next) {
+router.post('/:playlist_id/add', async function(req, res, next) {
   let user;
-  let title_;
 
   if(req.session.username && (user = await userData.getUser(req.session.username))) {
     let playlist;
 
-    if(req.body.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.body.playlist_id, username: req.session.username })) && playlist.length === 1) {
-
-      console.log(req.body);
+    if(req.params.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.params.playlist_id, username: req.session.username })) && playlist.length === 1) {
       let checked = req.body.titles;
 
-      if(typeof checked === 'string') {
-        checked = [checked];
-      }
-
-      for (let i = 0; i < checked.length; i++) {
-
-        const title_id_tuple = checked[i].split(",");
-        let title = title_id_tuple[0];
-        let id = title_id_tuple[1];
-
-        let offset = await playlistTrackData.countTracksInPlaylist({playlist_id: playlist[0].playlist_id});
-
-        console.log("offset");
-        console.log(offset);
-        if(await playlistTrackData.addTrackToPlaylistReal(offset[0]['COUNT(*)']+1, playlist[0].playlist_id, title, parseInt(id))) {
-        } else {
-            res.render('playlist_info', { name: playlist[0].name, creator: playlist[0].username, playlist_id: playlist[0].playlist_id, can_update: true, message: `Could not add ${title} to ${playlist[0].name}` });
+      if(checked) {
+        if(typeof checked === 'string') {
+          checked = [checked];
         }
+
+        for (let i = 0; i < checked.length; i++) {
+          let title_id_tuple = checked[i].split(",");
+          let title = title_id_tuple[0];
+          let id = title_id_tuple[1];  
+          let offset = await playlistTrackData.countTracksInPlaylist({playlist_id: playlist[0].playlist_id});
+  
+          if(!(await playlistTrackData.addTrackToPlaylistReal(offset[0]['COUNT(*)'], playlist[0].playlist_id, title, parseInt(id)))) {
+            res.render('playlist_info', { ...playlist[0], can_update: req.session.username === playlist[0].username, message: `Could not add ${title} to ${playlist[0].name}` });
+            return;
+          }
+        }
+  
+        res.render('playlist_info', { ...playlist[0], tracks: await playlistTrackData.getTracksInPlaylist({playlist_id: req.params.playlist_id}), can_update: req.session.username === playlist[0].username, message: `Successfully added all selected tracks!`});
+      } else {
+        res.render('playlist_info', { ...playlist[0], tracks: await playlistTrackData.getTracksInPlaylist({ playlist_id: req.params.playlist_id }), can_update: req.session.username === playlist[0].username, message: `No tracks to add`});
       }
-
-      console.log(user);
-      res.render('playlist_info', { name: user.name, username: user.username, playlist_id: req.body.playlist_id, tracks: await playlistTrackData.getTracksInPlaylist({playlist_id: req.body.playlist_id}), can_update: true, message: `Successfully added all selected tracks!`}); //`Deleted playlist ${playlist[0].name}` });
-
     } else {
       req.session.username = null;
 
@@ -120,49 +119,38 @@ router.post('/add', async function(req, res, next) {
   }
 });
 
-router.post('/rem', async function(req, res, next) {
+router.post('/:playlist_id/rem', async function(req, res, next) {
   let user;
-  let title_;
-  console.log(req.session.username, await userData.getUser(req.session.username));
 
   if(req.session.username && (user = await userData.getUser(req.session.username))) {
     let playlist;
 
-    if(req.body.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.body.playlist_id, username: req.session.username })) && playlist.length === 1) {
-
-      console.log(req.body);
+    if(req.params.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.params.playlist_id, username: req.session.username })) && playlist.length === 1) {
       let checked = req.body.titles;
 
-      if(typeof checked === 'string') {
-        checked = [checked];
-      }
-
-      for (let i = 0; i < checked.length; i++) {
-
-        const title_id_tuple = checked[i].split(",");
-        let title = title_id_tuple[0];
-        let id = title_id_tuple[1];
-
-        let idx = await playlistTrackData.getTracksInPlaylist({playlist_id: parseInt(req.body.playlist_id), artist_id: parseInt(id), title: title});
-
-        console.log("offset");
-        if(await playlistTrackData.removeTrackFromPlaylistReal(parseInt(idx[0].idx), parseInt(playlist[0].playlist_id))) {
-        } else {
-            res.render('playlist_info', { name: playlist[0].name, creator: playlist[0].username, playlist_id: playlist[0].playlist_id, can_update: true, message: `Could not remove ${title} from ${playlist[0].name}` });
+      if(checked) {
+        if(typeof checked === 'string') {
+          checked = [checked];
         }
+
+        for (let i = 0; i < checked.length; i++) {
+          let idx = checked[i];
+  
+          if(!(await playlistTrackData.removeTrackFromPlaylistReal(parseInt(idx), parseInt(req.params.playlist_id)))) {
+            playlistData.reindexPlaylist(req.params.playlist_id);
+            
+            res.render('playlist_info', { ...playlist[0], can_update: req.session.username === playlist[0].username, message: `Could not remove ${title} from ${playlist[0].name}`});
+            
+            return;
+          }
+        }
+
+        playlistData.reindexPlaylist(req.params.playlist_id);  
+
+        res.render('playlist_info', { ...playlist[0], tracks: await playlistTrackData.getTracksInPlaylist({ playlist_id: req.params.playlist_id }), can_update: req.session.username === playlist[0].username, message: `Successfully deleted all selected tracks!`});
+      } else {
+        res.render('playlist_info', { ...playlist[0], tracks: await playlistTrackData.getTracksInPlaylist({ playlist_id: req.params.playlist_id }), can_update: req.session.username === playlist[0].username, message: `No tracks to delete`});
       }
-
-      let playlist_tracks = await playlistTrackData.getTracksInPlaylist({playlist_id: req.body.playlist_id});
-      let playlist_len = await playlistTrackData.countTracksInPlaylist({playlist_id: playlist[0].playlist_id});
-      for (let i = 0; i < playlist_len; i++) {
-
-        playlistTrackData.updateIndices(parseInt(i), parseInt(playlist_tracks[i].idx), parseInt(playlist[0].playlist_id));
-
-      }
-
-      console.log(user);
-      res.render('playlist_info', { name: user.name, username: user.username, playlist_id: req.body.playlist_id, tracks: await playlistTrackData.getTracksInPlaylist({playlist_id: req.body.playlist_id}), can_update: true, message: `Successfully deleted all selected tracks!`}); //`Deleted playlist ${playlist[0].name}` });
-
     } else {
       req.session.username = null;
 
@@ -200,9 +188,7 @@ router.post('/delete', async function(req, res, next) {
 });
 
 router.get('/clone/:playlist_id', async function(req, res, next) {
-  let user;
-
-  if(req.session.username && (user = await userData.getUser(req.session.username))) {
+  if(req.session.username && await userData.getUser(req.session.username)) {
     let playlist;
     let cloneId;
 

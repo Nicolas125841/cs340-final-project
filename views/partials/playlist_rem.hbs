@@ -1,24 +1,15 @@
-<form action="/playlist/rem" method="post">
-  <h3>Remove track from playlist</h3>
-  <fieldset>
-    <legend>Playlist to remove:</legend>
-   {{#each playlists}}
-        <div>
-        <input type="radio" id="{{playlist_id}}" name="playlist_id" value="{{playlist_id}}" />
-        <label for ="{{playlist_id}}">{{name}}</label>
-        </div>
-    {{/each}}
-  </fieldset>
-  <fieldset>
-    <legend>Tracks:</legend>
+<form action="/playlist/{{playlist_id}}/rem" method="post">
+  <h3 class='font-bold text-2xl' >Remove tracks from playlist</h3>
+  <fieldset class="mb-5">
+    <p class="text-lg font-medium text-gray-700">Tracks</p>
     {{#each tracks}}
       <div>
-        <input type="checkbox" id="{{title}}" name="titles" value="{{title}},{{artist_id}}" />
-        <label for="{{title}}">{{title}}</label>
+        <input type="checkbox" id="{{title}}" name="titles" value="{{idx}}" />
+        <label for="{{title}}">{{idx}}: {{title}}</label>
       </div>
     {{/each}}
   </fieldset>
   <div>
-    <input type="submit" value="Remove" />
+    <button type="submit" value="Update" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" >Remove</button>
   </div>
 </form>
