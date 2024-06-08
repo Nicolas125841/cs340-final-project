@@ -51,3 +51,22 @@
     {{> track_list}}
   </div>
 </div>
+<meta name="playlist-id" content="{{playlist_id}}">
+<div>
+  <p>{{message}}</p>
+</div>
+<div>
+  <button id="add-to-playlist">Add to Playlist</button>
+</div>
+<div>
+  <button id="remove-from-playlist">Remove from Playlist</button>
+</div>
+<div id="user-activity"></div>
+<div>
+  <a href="/user">User Home</a>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" defer ></script>
+<script src="/javascripts/playlistAddTrackTemplate.js" defer ></script>
+<script src="/javascripts/playlistRemoveTrackTemplate.js" defer></script>
+<script src="/javascripts/TrackListTemplate.js" defer ></script>
+<script src="/javascripts/playlistDash.js" defer ></script>

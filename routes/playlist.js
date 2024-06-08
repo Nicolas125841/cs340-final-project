@@ -75,6 +75,7 @@ router.post('/create', async function(req, res, next) {
 
 router.post('/add', async function(req, res, next) {
   let user;
+  let title_;
 
   if(req.session.username && (user = await userData.getUser(req.session.username))) {
     let playlist;
@@ -90,25 +91,77 @@ router.post('/add', async function(req, res, next) {
 
       for (let i = 0; i < checked.length; i++) {
 
-        //console.log(checked[i]);
         const title_id_tuple = checked[i].split(",");
         let title = title_id_tuple[0];
         let id = title_id_tuple[1];
 
-        //console.log(i, playlist[0].playlist_id, title, parseInt(id));
         let offset = await playlistTrackData.countTracksInPlaylist({playlist_id: playlist[0].playlist_id});
-        //, title: checked[i].split(",")[0], artist_id:parseInt(checked[i].split(",")[1])
 
         console.log("offset");
         console.log(offset);
         if(await playlistTrackData.addTrackToPlaylistReal(offset[0]['COUNT(*)']+1, playlist[0].playlist_id, title, parseInt(id))) {
-            //res.render('playlist_info', { message: `Successfully added ${title} to ${playlist[0].name}`}); //`Deleted playlist ${playlist[0].name}` });
         } else {
-            res.render('playlist_info', { message: `Could not add ${title} to ${playlist[0].name}` });
+            res.render('playlist_info', { name: playlist[0].name, creator: playlist[0].username, playlist_id: playlist[0].playlist_id, can_update: true, message: `Could not add ${title} to ${playlist[0].name}` });
         }
       }
 
-      res.render('playlist_info', { message: `Nice`}); //`Deleted playlist ${playlist[0].name}` });
+      console.log(user);
+      res.render('playlist_info', { name: user.name, username: user.username, playlist_id: req.body.playlist_id, tracks: await playlistTrackData.getTracksInPlaylist({playlist_id: req.body.playlist_id}), can_update: true, message: `Successfully added all selected tracks!`}); //`Deleted playlist ${playlist[0].name}` });
+
+    } else {
+      req.session.username = null;
+
+      res.redirect('/user/login');
+    }
+  } else {
+    req.session.username = null;
+
+    res.redirect('/user/login');
+  }
+});
+
+router.post('/rem', async function(req, res, next) {
+  let user;
+  let title_;
+  console.log(req.session.username, await userData.getUser(req.session.username));
+
+  if(req.session.username && (user = await userData.getUser(req.session.username))) {
+    let playlist;
+
+    if(req.body.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.body.playlist_id, username: req.session.username })) && playlist.length === 1) {
+
+      console.log(req.body);
+      let checked = req.body.titles;
+
+      if(typeof checked === 'string') {
+        checked = [checked];
+      }
+
+      for (let i = 0; i < checked.length; i++) {
+
+        const title_id_tuple = checked[i].split(",");
+        let title = title_id_tuple[0];
+        let id = title_id_tuple[1];
+
+        let idx = await playlistTrackData.getTracksInPlaylist({playlist_id: parseInt(req.body.playlist_id), artist_id: parseInt(id), title: title});
+
+        console.log("offset");
+        if(await playlistTrackData.removeTrackFromPlaylistReal(parseInt(idx[0].idx), parseInt(playlist[0].playlist_id))) {
+        } else {
+            res.render('playlist_info', { name: playlist[0].name, creator: playlist[0].username, playlist_id: playlist[0].playlist_id, can_update: true, message: `Could not remove ${title} from ${playlist[0].name}` });
+        }
+      }
+
+      let playlist_tracks = await playlistTrackData.getTracksInPlaylist({playlist_id: req.body.playlist_id});
+      let playlist_len = await playlistTrackData.countTracksInPlaylist({playlist_id: playlist[0].playlist_id});
+      for (let i = 0; i < playlist_len; i++) {
+
+        playlistTrackData.updateIndices(parseInt(i), parseInt(playlist_tracks[i].idx), parseInt(playlist[0].playlist_id));
+
+      }
+
+      console.log(user);
+      res.render('playlist_info', { name: user.name, username: user.username, playlist_id: req.body.playlist_id, tracks: await playlistTrackData.getTracksInPlaylist({playlist_id: req.body.playlist_id}), can_update: true, message: `Successfully deleted all selected tracks!`}); //`Deleted playlist ${playlist[0].name}` });
 
     } else {
       req.session.username = null;
