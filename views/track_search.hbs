@@ -1,25 +1,29 @@
-<div class="w-full mb-5">
-  <a class="text-blue-500" href="/user">User Home</a>
-  <span> | </span>
-  <a class="text-blue-500" href="/artist">Artist Home</a>
-  <span> | </span>
-  <a class="text-blue-500" href="/track">Tracks</a>
-  <span> | </span>
-  <a class="text-blue-500" href="/playlist">Playlists</a>
-</div>
-<h1 class="text-2xl font-bold mb-4">Search Tracks:</h1>
-<div>
-  {{#each tracks}}
-    <a class='font-bold' href="/track/{{artist_id}}/{{title}}">
-      <div class="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm">
-        <p class="text-lg font-semibold">{{title}} by {{artist_name}} | {{genre}}</p>
-        <p class="text-sm text-gray-600">
-          Length: {{length}}
-          {{#if explicitness}}
-            | <span class="font-bold text-red-500">explicit</span>
-          {{/if}}
-        </p>
-      </div>
-    </a>
-  {{/each}}
+<div class='flex justify-center items-center relative'>
+  <div class='w-full bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 relative'>
+    <div class="w-full mb-5">
+      <a class="text-blue-500" href="/user">User Home</a>
+      <span> | </span>
+      <a class="text-blue-500" href="/artist">Artist Home</a>
+      <span> | </span>
+      <a class="text-blue-500" href="/track">Tracks</a>
+      <span> | </span>
+      <a class="text-blue-500" href="/playlist">Playlists</a>
+    </div>
+    <h1 class="text-2xl font-bold mb-4">Search Tracks:</h1>
+    <div>
+      {{#each tracks}}
+        <a class='font-bold' href="/track/{{artist_id}}/{{title}}">
+          <div class="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm">
+            <p class="text-lg font-semibold">{{title}} by {{artist_name}} | {{genre}}</p>
+            <p class="text-sm text-gray-600">
+              Length: {{length}}
+              {{#if explicitness}}
+                | <span class="font-bold text-red-500">explicit</span>
+              {{/if}}
+            </p>
+          </div>
+        </a>
+      {{/each}}
+    </div>
+  </div>
 </div>

@@ -61,7 +61,7 @@ router.post('/:playlist_id/add', async function(req, res, next) {
           let id = title_id_tuple[1];  
           let offset = await playlistTrackData.countTracksInPlaylist({playlist_id: playlist[0].playlist_id});
   
-          if(!(await playlistTrackData.addTrackToPlaylistReal(offset[0]['COUNT(*)'], playlist[0].playlist_id, title, parseInt(id)))) {
+          if(!(await playlistTrackData.addTrackToPlaylistReal(offset[0]['COUNT(*)']+1, playlist[0].playlist_id, title, parseInt(id)))) {
             res.render('playlist_info', { ...playlist[0], can_update: req.session.username === playlist[0].username, message: `Could not add ${title} to ${playlist[0].name}` });
             return;
           }
