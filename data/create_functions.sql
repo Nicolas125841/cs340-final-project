@@ -1,5 +1,5 @@
 DELIMITER //
-CREATE TRIGGER `upto30Songs` BEFORE INSERT ON `TrackInPlaylist`
+CREATE TRIGGER `upto8Songs` BEFORE INSERT ON `TrackInPlaylist`
 FOR EACH ROW 
 BEGIN
 	DECLARE counter integer;
@@ -7,8 +7,8 @@ BEGIN
 	SELECT COUNT(*) INTO counter
 		FROM `TrackInPlaylist`
 		WHERE playlist_id = New.playlist_id;
-	IF (counter > 29) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Cannot have more than 30 songs in playlist';
+	IF (counter > 7) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Cannot have more than 8 songs in playlist';
 	END IF;
 END; //
 

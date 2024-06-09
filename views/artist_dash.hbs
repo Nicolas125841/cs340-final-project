@@ -20,6 +20,9 @@
         <h1 class='text-xl font-bold'>Producer: {{producer}}</h1>
       </div>
     {{/if}}
+    <div>
+      <p>{{message}}</p>
+    </div>
     <div class='content flex flex-row w-full'>
       <div class="flex flex-col items-center justify-center p-4 w-1/2">
         <div class="w-1/2 text-center">
@@ -37,9 +40,6 @@
       <div class='playlist-list w-1/2 text-center'>
         <div id="artist-activity"></div>
       </div>
-    </div>
-    <div>
-      <p>{{message}}</p>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" defer ></script>
     <script src="/javascripts/trackListTemplate.js" defer ></script>

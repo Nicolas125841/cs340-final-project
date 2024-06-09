@@ -63,8 +63,6 @@ module.exports = {
                 terms.push(term);
             }
 
-            console.log(filter, terms);
-
             const [results] = await db.query('SELECT COUNT(*) FROM `TrackInPlaylist` ' + (terms.length ? 'WHERE' + filter : ''), terms);
 
             return results;

@@ -1,5 +1,6 @@
 var express = require('express');
 var data = require('../data/artist');
+var playlistData = require('../data/playlist');
 
 var router = express.Router();
 
@@ -81,6 +82,12 @@ router.get('/logout', function(req, res, next) {
 router.post('/remove', async function(req, res, next) {
   if(req.session.artist_id && await data.deleteArtist(req.session.artist_id)) {
     req.session.artist_id = null;
+
+    let playlists = await playlistData.getPlaylists({});
+
+    for(let playlist of playlists) {
+      await playlistData.reindexPlaylist(playlist.playlist_id);
+    }
 
     res.redirect('/artist');
   } else {

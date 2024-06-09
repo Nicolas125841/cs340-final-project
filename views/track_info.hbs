@@ -35,11 +35,11 @@
         <div class='flex flex-col w-full justify-center items-center text-center'>
           <div class='flex flex-row items-center text-center space-x-5 mt-5 mb-5'>
             <label for="genre" class="block text-lg font-medium text-gray-700" >Genre:</label>
-            <input type="text" name="genre" id="genre" class="rounded mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+            <input type="text" maxlength="20" name="genre" id="genre" class="rounded mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
           </div>
           <div class='flex flex-row items-center text-center space-x-5 mb-5'>
             <label for="length" class="block text-lg font-medium text-gray-700" >Length:</label>
-            <input type="number" name="length" id="length" class="rounded mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+            <input type="number" min="1" max="1000" name="length" id="length" class="rounded mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
           </div>
           <fieldset class='w-full flex flex-row space-x-3 justify-center mb-5'>
             <p class="text-lg font-medium text-gray-700">Explicitness</p>

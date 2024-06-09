@@ -42,9 +42,7 @@ router.post('/create', async function(req, res, next) {
 });
 
 router.post('/:playlist_id/add', async function(req, res, next) {
-  let user;
-
-  if(req.session.username && (user = await userData.getUser(req.session.username))) {
+  if(req.session.username && await userData.getUser(req.session.username)) {
     let playlist;
 
     if(req.params.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.params.playlist_id, username: req.session.username })) && playlist.length === 1) {
@@ -61,8 +59,8 @@ router.post('/:playlist_id/add', async function(req, res, next) {
           let id = title_id_tuple[1];  
           let offset = await playlistTrackData.countTracksInPlaylist({playlist_id: playlist[0].playlist_id});
   
-          if(!(await playlistTrackData.addTrackToPlaylistReal(offset[0]['COUNT(*)']+1, playlist[0].playlist_id, title, parseInt(id)))) {
-            res.render('playlist_info', { ...playlist[0], can_update: req.session.username === playlist[0].username, message: `Could not add ${title} to ${playlist[0].name}` });
+          if(!(await playlistTrackData.addTrackToPlaylistReal(offset[0]['COUNT(*)'], playlist[0].playlist_id, title, parseInt(id)))) {
+            res.render('playlist_info', { ...playlist[0], tracks: await playlistTrackData.getTracksInPlaylist({playlist_id: req.params.playlist_id}), can_update: req.session.username === playlist[0].username, message: `Could not add ${title} to ${playlist[0].name}` });
             return;
           }
         }
@@ -100,7 +98,7 @@ router.post('/:playlist_id/rem', async function(req, res, next) {
   
           if(!(await playlistTrackData.removeTrackFromPlaylistReal(parseInt(idx), parseInt(req.params.playlist_id)))) {
             playlistData.reindexPlaylist(req.params.playlist_id);
-            res.render('playlist_info', { ...playlist[0], can_update: req.session.username === playlist[0].username, message: `Could not remove ${title} from ${playlist[0].name}`});
+            res.render('playlist_info', { ...playlist[0], tracks: await playlistTrackData.getTracksInPlaylist({playlist_id: req.params.playlist_id}), can_update: req.session.username === playlist[0].username, message: `Could not remove ${title} from ${playlist[0].name}`});
             
             return;
           }
@@ -176,8 +174,6 @@ router.get('/:playlist_id', async function(req, res, next) {
   if(req.params.playlist_id && (playlist = await playlistData.getPlaylists({ playlist_id: req.params.playlist_id })) && playlist.length === 1) {    
     let tracks = await playlistTrackData.getTracksInPlaylist({ playlist_id: playlist[0].playlist_id });
 
-    console.log(tracks);
-
     res.render('playlist_info', { ...playlist[0], tracks: tracks, can_update: req.session.username === playlist[0].username });
   } else {
     res.status(404).render('error', { message: 'Playlist does not exist' });
@@ -197,9 +193,9 @@ router.post('/:playlist_id', async function(req, res, next) {
       };
 
       if(await playlistData.updatePlaylist(newPlaylist, req.params.playlist_id)) {
-        res.render('playlist_info', { ...newPlaylist, can_update: req.session.username === newPlaylist.username });
+        res.render('playlist_info', { ...newPlaylist, tracks: await playlistTrackData.getTracksInPlaylist({ playlist_id: req.params.playlist_id }), can_update: req.session.username === newPlaylist.username });
       } else {
-        res.render('playlist_info', { ...oldPlaylist, message: 'Could not update playlist', can_update: req.session.username === oldPlaylist.username });
+        res.render('playlist_info', { ...oldPlaylist[0], tracks: await playlistTrackData.getTracksInPlaylist({ playlist_id: req.params.playlist_id }), message: 'Could not update playlist', can_update: req.session.username === oldPlaylist.username });
       }
     } else {
       res.status(404).render('error', { message: 'Could not find playlist' });

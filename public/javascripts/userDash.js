@@ -15,7 +15,6 @@
     })
     let userPlaylists = await response.json();
     let listHtml = Handlebars.templates['playlist_list.hbs']({ playlists: userPlaylists });
-    console.log(listHtml)
 
     activitySection.replaceChildren();
     activitySection.insertAdjacentHTML('beforeend', listHtml);

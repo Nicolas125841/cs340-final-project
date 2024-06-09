@@ -1,6 +1,7 @@
 var express = require('express');
 var artistData = require('../data/artist');
 var trackData = require('../data/track');
+var playlistData = require('../data/playlist');
 
 var router = express.Router();
 
@@ -44,9 +45,9 @@ router.post('/:artist_id/:title', async function(req, res, next) {
       };
 
       if(await trackData.updateTrack(newTrack, req.params.title, req.session.artist_id)) {
-        res.render('track_info', { ...newTrack, artist_name: oldTrack.artist_name, can_update: req.session.artist_id === `${newTrack.artist_id}` });
+        res.render('track_info', { ...newTrack, artist_name: oldTrack[0].artist_name, can_update: req.session.artist_id === `${newTrack.artist_id}` });
       } else {
-        res.render('track_info', { ...oldTrack, message: 'Could not update track', can_update: req.session.artist_id === `${oldTrack.artist_id}` });
+        res.render('track_info', { ...oldTrack[0], message: 'Could not update track', can_update: req.session.artist_id === `${oldTrack.artist_id}` });
       }
     } else {
       res.status(404).render('error', { message: 'Could not find track' });
@@ -79,6 +80,12 @@ router.post('/delete', async function(req, res, next) {
 
   if(req.body.title && req.session.artist_id && (artist = await artistData.getArtist(req.session.artist_id))) {
     if(await trackData.deleteTrack(req.body.title, req.session.artist_id)) {
+      let playlists = await playlistData.getPlaylists({});
+
+      for(let playlist of playlists) {
+        await playlistData.reindexPlaylist(playlist.playlist_id);
+      }
+      
       res.render('artist_dash', { ...artist, message: `Deleted track ${req.body.title}`});
     } else {
       res.render('artist_dash', { ...artist, message: `Could not delete track ${req.body.title}`});
