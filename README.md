@@ -17,4 +17,4 @@
 	- Note, if you don't have **mysql** installed this will not work. Instead, import/run the `./data/create_db.sql`, `./data/populate_db.sql`, and `./data/create_functions.sql` on **phpMyAdmin** in that order to prepare the tables
 5. Run `npm install` to download the server dependencies
 6. Run `npm start` to start the server
-7. Once `cs340-final-project:server Listening on port <port>` appears in the terminal, the website is ready to access at `localhost:<port>`
+7. Once `cs340-final-project:server Listening on port <port>` appears in the terminal, the website is ready to access at `localhost:<port>/user/login`
