@@ -5,12 +5,12 @@
 2. Edit the `./env.sh` file with the appropriate parameters
 ```bash
     DEBUG=cs340-final-project:* #Reveals logs
-	PORT=<port number> #Port number express will serve on
+    PORT=<port number> #Port number express will serve on
     DB_HOST='classmysql.engr.oregonstate.edu' #Database host server
-	DB_UNAME='cs340_<onid>' #Account username for database
-	DB_PWD='<password>' #Account password for database
-	DB_DB='cs340_<onid>' #Name of database
-	SESH_KEY='cs340 token' #Session secret, can be anything
+    DB_UNAME='cs340_<onid>' #Account username for database
+    DB_PWD='<password>' #Account password for database
+    DB_DB='cs340_<onid>' #Name of database
+    SESH_KEY='cs340 token' #Session secret, can be anything
 ```
 3. Run `source env.sh` to set the environment variables
 4. Run `./load_db.sh` to configure the tables, initial contents, and triggers.
