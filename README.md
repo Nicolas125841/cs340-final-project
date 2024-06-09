@@ -4,7 +4,7 @@
 1. Unzip the source code and navigate to its **root** directory
 2. Edit the `./env.sh` file with the appropriate parameters
 ```bash
-    DEBUG=cs340-final-project:* //Reveals logs
+    DEBUG=cs340-final-project:* #Reveals logs
 	PORT=<port number> #Port number express will serve on
     DB_HOST='classmysql.engr.oregonstate.edu' #Database host server
 	DB_UNAME='cs340_<onid>' #Account username for database
