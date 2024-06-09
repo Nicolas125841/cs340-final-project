@@ -12,7 +12,7 @@
     DB_DB='cs340_<onid>' #Name of database
     SESH_KEY='cs340 token' #Session secret, can be anything
 ```
-3. Run `source env.sh` to set the environment variables
+3. Run `source env.sh` to set the environment variables (windows users mush export the variables manually instad)
 4. Run `./load_db.sh` to configure the tables, initial contents, and triggers.
 	- Note, if you don't have **mysql** installed this will not work. Instead, import/run the `./data/create_db.sql`, `./data/populate_db.sql`, and `./data/create_functions.sql` on **phpMyAdmin** in that order to prepare the tables
 5. Run `npm install` to download the server dependencies
