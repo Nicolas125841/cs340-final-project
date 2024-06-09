@@ -15,8 +15,16 @@
       <h1 class='text-xl font-bold'>Creator: {{username}}</h2>
       <h1 class='text-xl font-bold'>Length: {{length}}</h2>
       <h1 class='text-xl font-bold'>
+        Visibility:
+        {{#if (demux public)}}
+          <span>Public</span>
+        {{else}}
+          <span>Private</span>
+        {{/if}}
+      </h1>
+      <h1 class='text-xl font-bold'>
         Explicitness: 
-        {{#if is_explicit}}
+        {{#if (demux is_explicit)}}
           <span class='text-red-500'>Explicit</span>
         {{else}}
           <span>Clean</span>

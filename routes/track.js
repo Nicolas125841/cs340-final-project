@@ -25,7 +25,7 @@ router.get('/:artist_id/:title', async function(req, res, next) {
   let track;
 
   if(req.params.title && req.params.artist_id && (track = await trackData.getTracksWithArtist({ title: req.params.title, artist_id: req.params.artist_id })) && track.length === 1) {    
-    res.render('track_info', { ...track[0], can_update: req.session.artist_id === `${track[0].artist_id}` });
+    res.render('track_info', { ...track[0], can_update: `${req.session.artist_id}` === `${track[0].artist_id}` });
   } else {
     res.status(404).render('error', { message: 'Track does not exist' });
   }
@@ -45,9 +45,9 @@ router.post('/:artist_id/:title', async function(req, res, next) {
       };
 
       if(await trackData.updateTrack(newTrack, req.params.title, req.session.artist_id)) {
-        res.render('track_info', { ...newTrack, artist_name: oldTrack[0].artist_name, can_update: req.session.artist_id === `${newTrack.artist_id}` });
+        res.render('track_info', { ...newTrack, artist_name: oldTrack[0].artist_name, can_update: `${req.session.artist_id}` === `${newTrack.artist_id}` });
       } else {
-        res.render('track_info', { ...oldTrack[0], message: 'Could not update track', can_update: req.session.artist_id === `${oldTrack.artist_id}` });
+        res.render('track_info', { ...oldTrack[0], message: 'Could not update track', can_update: `${req.session.artist_id}` === `${oldTrack.artist_id}` });
       }
     } else {
       res.status(404).render('error', { message: 'Could not find track' });

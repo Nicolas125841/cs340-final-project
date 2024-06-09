@@ -19,7 +19,7 @@
                 <p class="text-lg font-semibold">{{name}} by {{username}}</p>
                 <p class="text-sm text-gray-600">
                   Length: {{length}}
-                  {{#if is_explicit}}
+                  {{#if (demux is_explicit)}}
                     | <span class="font-bold text-red-500">explicit</span>
                   {{/if}}
                 </p>

@@ -17,7 +17,7 @@
             <p class="text-lg font-semibold">{{title}} by {{artist_name}} | {{genre}}</p>
             <p class="text-sm text-gray-600">
               Length: {{length}}
-              {{#if explicitness}}
+              {{#if (demux explicitness)}}
                 | <span class="font-bold text-red-500">explicit</span>
               {{/if}}
             </p>

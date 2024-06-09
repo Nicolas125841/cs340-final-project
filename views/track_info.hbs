@@ -17,7 +17,7 @@
       <h1 class='text-xl font-bold'>Length: {{length}}</h1>
       <h1 class='text-xl font-bold'>
         Explicitness: 
-        {{#if explicitness}}
+        {{#if (demux explicitness)}}
           <span class='text-red-500'>Explicit</span>
         {{else}}
           <span>Clean</span>
